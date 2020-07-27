@@ -1,0 +1,33 @@
+<header class="bg-info text-white w-100 p-3">
+    <h3 class="text-center m-0">SPORT STORE - ADMIN</h3>
+</header>
+
+<div class="container border rounded shadow mt-3">
+
+    <div *ngIf="hasError" class="bg-danger mt-3 p-2 text-center text-white rounded">Wrong name or password</div>
+
+    <form class="m-4" novalidate [formGroup]="myForm" (ngSubmit)="login()">
+
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" formControlName="name" class="form-control" id="name">
+            <div *ngIf="myForm.get('name').touched && myForm.get('name').invalid" class="alert alert-danger">
+                Required field
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" formControlName="password" class="form-control" id="password">
+            <div *ngIf="myForm.get('password').touched && myForm.get('password').invalid" class="alert alert-danger">
+                Required field
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-secondary m-2" type="button" (click)="navigateTo('/store')">Go back</button>
+            <button class="btn btn-primary m-2" type="submit" [disabled]="myForm.invalid">Log in</button>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,46 @@
+<header class="d-inline-flex align-items-center bg-secondary text-white w-100 p-3">
+    <h3 class="flex-grow-1 m-0">SPORT STORE</h3>
+    <div class="d-inline-flex">
+        <p class="m-2 mr-4" *ngIf="!cartService.get().length">Your cart is empty</p>
+        <p class="m-2 mr-4" *ngIf="cartService.get().length">Your cart: {{cartService.getQuantity()}} item(s)
+            ${{cartService.getTotal()}}.00</p>
+        <svg (click)="toCart()" width="40px" height="40px" viewBox="0 0 16 16" class="bi bi-basket3-fill"
+            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                d="M10.243 1.071a.5.5 0 0 1 .686.172l3 5a.5.5 0 0 1-.858.514l-3-5a.5.5 0 0 1 .172-.686zm-4.486 0a.5.5 0 0 0-.686.172l-3 5a.5.5 0 1 0 .858.514l3-5a.5.5 0 0 0-.172-.686z" />
+            <path d="M13.489 14.605A.5.5 0 0 1 13 15H3a.5.5 0 0 1-.489-.395L1.311 9H14.69l-1.201 5.605z" />
+            <rect width="16" height="2" y="6" rx=".5" />
+        </svg>
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-3 p-2">
+            <button class="btn btn-block btn-outline-primary" (click)="defaultList()">Home</button>
+            <button class="btn btn-block btn-outline-primary" *ngFor="let category of categoriesList"
+                [class.active]="category == activeButton" (click)="sortList(category)">{{category}}</button>
+            <button class="btn btn-block btn-danger mt-5" (click)="toAdmin()">Admin</button>
+        </div>
+        <div class="col-9 p-2">
+            <div class="card m-1 bg-light" *ngFor="let product of pages[selectedPage]">
+                <h4 class="m-3">{{product.name}}
+                    <span class="badge badge-pill badge-primary float-right">${{product.price}}.00</span>
+                </h4>
+                <div class="card-text bg-white p-3">{{product.description}} ({{product.category}})
+                    <button class="btn btn-success btn-sm float-right" (click)="add(product)">Add to cart</button>
+                </div>
+            </div>
+            <div class="d-inline-flex w-100">
+                <select class="form-control w-auto m-1" [(ngModel)]="selectedOption" (change)="pagination()">
+                    <option *ngFor="let option of selectOptions" [ngValue]="option">{{option}}</option>
+                </select>
+                <div class="btn-group ml-auto m-1" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-outline-primary" *ngFor="let item of pages; index as i"
+                        [class.active]="i == activePage" (click)="switchPage(i)">{{i + 1}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
